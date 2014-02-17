@@ -1,7 +1,7 @@
 {
   "name": "guiframework",
   "version": "1.0.0",
-  "developedBy":"Grapeshot Ltd",
+  "developedBy":"David Buttar",
   "dependencies": {},
   "devDependencies": {
     "grunt": "~0.4.1",
