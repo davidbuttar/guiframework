@@ -16,7 +16,6 @@ var gui = gui || {};
         var indexFile = opts.indexFile || ''; // root of app on server
         var prettyUri = (typeof opts.prettyUrl !== 'undefined') ? opts.prettyUrl : true; // use pretty uris, if false using query strings
         
-        
         var pages = {};
         var components = {};
         var curLoc;
@@ -34,69 +33,10 @@ var gui = gui || {};
 
         // Place this id in a page and the framework will not run
         var staticPage = $('#static_page').length >=1;
-
-
+        
+        // Page Transition effects can be added on a site per site basis
         var effects = {};
 
-        // Slide the current page left
-        // and slide the incoming page from the right
-        effects.fadeToSlideUp = function() {
-            $('#' + prevId).animate({
-                'opacity' : 0
-            }, 600, function() {
-                swapActive();
-                $('#' + curId).css({
-                    'top' : '100%'
-                }).animate({
-                    'opacity' : 1,
-                    'top' : '0px'
-                },{
-                    duration:300,
-                    specialEasing: {
-                        top: 'linear'
-                    },
-                    complete:pageVisible
-                });
-                pages[curId].onload();
-                fetching = false;
-            });
-        };
-
-        // Slide the current page left
-        // and slide the incoming page from the right
-        effects.slideUpToSlideUp = function() {
-            $('#' + prevId).animate({
-                'top' : '100%'
-            }, 500, function() {
-                $('#' + prevId).css({'top' : '0px', 'opacity' : 0});
-                swapActive();
-                $('#' + curId).css({
-                    'top' : '100%'
-                }).animate({
-                    'opacity' : 1,
-                    'top' : '0px'
-                }, 500, pageVisible);
-                pages[curId].onload();
-                fetching = false;
-            });
-        };
-
-        // Slide the current page left
-        // and slide the incoming page from the right
-        effects.slideDownToFade = function() {
-            $('#' + prevId).animate({
-                'top' : '100%'
-            }, 600, function() {
-                $('#' + prevId).css({'top' : '0px', 'opacity' : 0});
-                swapActive();
-                $('#' + curId).animate({
-                    'opacity' : 1
-                }, 300, pageVisible);
-                pages[curId].onload();
-
-                fetching = false;
-            });
-        };
 
         // Default effect
         function fadeBetween() {
@@ -122,6 +62,13 @@ var gui = gui || {};
         // initializing
         function loadHandlers(el, id) {
             var componentClass = 'page';
+
+            // No element found, so attach default component
+            if (!el){
+                pages[id] = gui.component();
+                return;
+            }
+            
             // The CSS class name used to id a component.
             // Run if element is a component
             if (el.className.indexOf(componentClass) !== -1) {
@@ -189,7 +136,7 @@ var gui = gui || {};
                 var curEffect = $('#' + curId).data('effect') || 'fade';
                 var suggestedEffect = suggestedEffectFunctionName(prevEffect, curEffect);
                 if (effects[suggestedEffect]) {
-                    effects[suggestedEffect]();
+                    effects[suggestedEffect]($('#' + prevId), $('#' + curId), swapActive, pageVisible, pages[curId].onload);
                 } else if (prevId === curId) {// going to the page we are on requires no effects
                     pages[curId].onload();
                     fetching = false;
@@ -344,6 +291,11 @@ var gui = gui || {};
         // Add an observer which can then react to route changes
         that.addObserver = function(inCallback) {
             observers.push(inCallback);
+        };
+
+        // Add an observer which can then react to route changes
+        that.addEffect = function(inName, inEffect) {
+            effects[inName] = inEffect;
         };
 
         //Return the current page handler of a given id
