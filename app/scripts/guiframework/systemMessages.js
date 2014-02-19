@@ -1,8 +1,9 @@
 /* global gui */
 // guiframework expects this class and it's accosciated html
 // to display loading alert and other messages and dialogs.
-'use strict';
+
 (function() {
+    'use strict';
     var sysMsg = function(opts) {
         var that = {};
         opts = opts || {};

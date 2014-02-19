@@ -1,7 +1,8 @@
 /* global gui */
 // guiframework parent class for all components
-'use strict';
+
 (function() {
+    'use strict';
     var comp = function(opts) {
         var that = {};
         opts = opts || {};

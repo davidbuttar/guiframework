@@ -4,10 +4,10 @@
 // for guiframework components.
 
 // Set up namespace if it's not already available
-'use strict';
 var gui = gui || {};
 
 (function() {
+    'use strict';
     var framework = function(opts) {
         var that = {};
         opts = opts || {};

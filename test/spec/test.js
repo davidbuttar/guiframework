@@ -1,30 +1,27 @@
-/* global describe, it, assert, myName, $, gui */
+/* global describe, it, assert, $, gui, before, beforeEach, afterEach */
 
 (function () {
     'use strict';
 
     describe('Routing', function(){
     
+        // Make sure we have enough time.
         this.timeout(15000);
 
         /**
          * Do the test set up
          */
         beforeEach(function(){
-            console.log('----- Start Tests -----');
             gui.app = gui.framework();
             gui.app.loadComponents();
 
             gui.app.addObserver(function (id){
-                if (id == "index_button")
-                {
-                    $('#whatami').html("bannana");
+                if (id === 'index_button'){
+                    $('#whatami').html('bannana');
                 }
-                else
-                {
-                    $('#whatami').html("apple");
+                else{
+                    $('#whatami').html('apple');
                 }
-
             });
             
         });
@@ -61,8 +58,8 @@
 
         describe('On change hash to #/index/test', function(){
 
-            before(function(done){ 
-                document.location.hash = "/index/test";
+            before(function(done){
+                document.location.hash = '/index/test';
                 gui.app.pageVisible(function(){
                     done();
                 });
@@ -70,11 +67,11 @@
 
             it('page with id=index_test should be the only one active', function(){
                 assert(
-                    $('#index_test').hasClass('comp-active'), 
+                    $('#index_test').hasClass('comp-active'),
                     'index_test has comp-active class'
                 );
                 assert(
-                    !$('#index_index').hasClass('comp-active'), 
+                    !$('#index_index').hasClass('comp-active'),
                     'index_index does not have comp-active class'
                 );
             });
@@ -87,13 +84,11 @@
 
         describe('When I click go to test id=index_test should be active', function(){
 
-           before(function(done){ 
-            
+            before(function(done){
                 $('#index_button_link').trigger('click');
                 gui.app.pageVisible(function(){
                     done();
                 });
-
             });
 
             it('page with id=index_test should be active', function(){
@@ -102,7 +97,7 @@
 
             it('page with id=index_test should hold three boobies', function(){
                 assert(
-                    $('#index_test').html() === "( . Y . Y . )", 
+                    $('#index_test').html() === '( . Y . Y . )',
                     'content of index_test is not as tripple boobies'
                 );
             });
@@ -110,16 +105,16 @@
 
         describe('When I visit the index button page the whatami is bannana', function(){
 
-           before(function(done){ 
+            before(function(done){
                 document.location.hash = '/index/button';
                 gui.app.pageVisible(function(){
                     done();
                 });
-            });            
+            });
 
             it('When on id=index_button the contentn of whatami is bannana', function(){
                 assert(
-                    $('#whatami').html() === "bannana", 
+                    $('#whatami').html() === 'bannana',
                     'content of whatami is bannana'
                 );
             });

@@ -1,8 +1,9 @@
 /* global gui */
 // Allows insertion of popups of various types in the page.
 // can be populater with inline content from the dom or an iframe.
-'use strict';
+
 (function() {
+    'use strict';
     var popupManager = function(app) {
         var that = {};
         var popupSettings = {};
