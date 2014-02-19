@@ -24,6 +24,10 @@ var gui = gui || {};
         var prevId = false;
         var observers = opts.observers || [];
 
+        // Users can specify any enhancements that should be run 
+        // against the html such as a jquery plugin.
+        var htmlEnhancement = opts.htmlEnhancement || false;
+
         // A function to run on the first load of the app to download any required global data
         var onFirstLoad = opts.onFirstLoad || false;
         var fetching = false;
@@ -36,6 +40,9 @@ var gui = gui || {};
         
         // Page Transition effects can be added on a site per site basis
         var effects = {};
+
+        // Initialize popup manager
+        gui.popups = gui.popupManager(that);
 
 
         // Default effect
@@ -169,8 +176,10 @@ var gui = gui || {};
         // run any jquery helps on it, and load it's data.
         function htmlLoaded(){
             var el = $('#' + curId);
-            // run any html 5 shims
-            $('input').placeholder();
+            
+            if(htmlEnhancement){
+                htmlEnhancement();
+            }
 
             loadHandlers(el[0], curId);
 
@@ -256,8 +265,8 @@ var gui = gui || {};
                 controller = uriBits[0] || 'index';
                 action = uriBits[1] || 'index';
             }else{
-                controller = gui.getParameterByName('c', uri);
-                action = gui.getParameterByName('a', uri);
+                controller = that.getParameterByName('c', uri);
+                action = that.getParameterByName('a', uri);
             }
             return controller + '_' + action;
         }
@@ -265,6 +274,20 @@ var gui = gui || {};
 
         // ---- Public Methods ----
 
+
+        that.getParameterByName = function(name, url)
+        {
+            url = url || window.location.href;
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regexS = '[\\?&]' + name + '=([^&#]*)';
+            var regex = new RegExp(regexS);
+            var results = regex.exec(url);
+            if(results === null){
+                return false;
+            }else {
+                return decodeURIComponent(results[1].replace(/\+/g, ' '));
+            }
+        };
 
         // Update any observers passing the current active ID
         that.updateObservers = function() {
@@ -325,7 +348,10 @@ var gui = gui || {};
                 if (localComponents[i].getAttribute('data-handler')) {
                     if (!components[localComponents[i].getAttribute('id')]) {
                         components[localComponents[i].getAttribute('id')] = gui[localComponents[i].getAttribute('data-handler')]();
-                        components[localComponents[i].getAttribute('id')].onload();
+                        // Unless it's a popup run onload to get the component loaded.
+                        if (!$(localComponents[i]).hasClass('pm_popup')){
+                            components[localComponents[i].getAttribute('id')].onload();
+                        }
                     }
                 }
             }
@@ -353,15 +379,17 @@ var gui = gui || {};
         $(window).hashchange(function() {
             if (staticPage){ return; }
             if (fetching) {
+                //reverse any change to the page location
                 if (curLoc){
                     location.hash = curLoc;
                 }
-                //reverse any change to the page location
                 return;
             }
+
             fetching = true;
 
             prevLoc = curLoc;
+
             // Alerts every time the hash changes!
             curLoc = location.hash.replace('#', '');
 

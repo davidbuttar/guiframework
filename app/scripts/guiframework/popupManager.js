@@ -3,7 +3,7 @@
 // can be populater with inline content from the dom or an iframe.
 'use strict';
 (function() {
-    var popupManager = function() {
+    var popupManager = function(app) {
         var that = {};
         var popupSettings = {};
         var curOpt = {};
@@ -88,6 +88,10 @@
             if (!document.getElementById('pm_' + curOpt.id)) {
                 buildBox();
             }
+            var handler = app.component('pm_'+curOpt.id);
+            if (handler) {
+                handler.onload();
+            }
             $this = $('#pm_' + curOpt.id);
             $this.css({
                 'display' : 'block'
@@ -170,6 +174,6 @@
         return that;
     };
 
-    gui.popups = popupManager();
+    gui.popupManager = popupManager;
 
 })();

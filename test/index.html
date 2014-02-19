@@ -5,9 +5,40 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Mocha Spec Runner</title>
     <link rel="stylesheet" href="bower_components/mocha/mocha.css">
+    <style>
+        .page {
+            display: none;
+            opacity: 0;
+            position: absolute;
+            width: 100%;
+        }
+
+        .comp-active {
+            display: block;
+        }
+    </style>
 </head>
 <body>
     <div id="mocha"></div>
+
+    <div class='main-content'>
+        
+        <a href="#/index/index">(.)</a>
+        <a href="#/index/test">(.)</a>
+        <a href="#/index/button">(.)</a>
+        <div>I am now: <span id='whatami'>Something</span></div>
+        
+        <div class='page' id='index_index'>( . Y . )</div>
+        <div class='page' id='index_test' data-handler='pageTest'>8========D</div>
+        <div class='page' id='index_button'>
+            <button id='index_button_link'>Go to Test</button>
+        </div>
+
+    </div>
+
+    <script src="../app/bower_components/jquery/jquery.js"></script>
+    <script src="../app/scripts/jquery.ba-hashchange.js"></script>
+
     <script src="bower_components/mocha/mocha.js"></script>
     <script>mocha.setup('bdd')</script>
     <script src="bower_components/chai/chai.js"></script>
@@ -15,7 +46,19 @@
         var assert = chai.assert;
         var expect = chai.expect;
         var should = chai.should();
+
+        $('#index_button_link').click(function(){
+            document.location.hash = "/index/test";
+        });
+
+
     </script>
+
+    <script src="../app/scripts/guiframework/framework.js"></script>
+    <script src="../app/scripts/guiframework/component.js"></script>
+    <script src="../app/scripts/guiframework/popupManager.js"></script>
+    <script src="../app/scripts/guiframework/systemMessages.js"></script>
+    <script src="./components/pageTest.js"></script>
 
     <script src="../app/scripts/main.js"></script>
 
