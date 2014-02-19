@@ -49,7 +49,7 @@
 
         describe('On page load the hash value should be blank', function(){
             it('should have blank hash value', function(){
-                window.location.hash.should.equal('');
+                document.location.hash.should.equal('');
             });
         });
 
