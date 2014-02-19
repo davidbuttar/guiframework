@@ -23,6 +23,9 @@ var gui = gui || {};
         var curId = false;
         var prevId = false;
         var observers = opts.observers || [];
+        var defaultFadeOutTime = opts.defaultFadeOutTime || 150;
+        var defaultFadePauseTime = opts.defaultFadeOutTime || 200;
+        var defaultFadeInTime = opts.defaultFadeInTime || 500;
 
         // Users can specify any enhancements that should be run 
         // against the html such as a jquery plugin.
@@ -49,7 +52,7 @@ var gui = gui || {};
         function fadeBetween() {
             $('#' + prevId).animate({
                 'opacity' : 0
-            }, 150, function() {
+            }, defaultFadeOutTime, function() {
                 swapActive();
                 setTimeout(function() {
                     $('#' + curId).css({
@@ -58,10 +61,10 @@ var gui = gui || {};
                     pageVisible();
                     $('#' + curId).animate({
                         'opacity' : 1
-                    }, 500);
+                    }, defaultFadeInTime);
                     pages[curId].onload();
                     fetching = false;
-                }, 200);
+                }, defaultFadePauseTime);
             });
         }
 

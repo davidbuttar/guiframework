@@ -12,7 +12,11 @@
          * Do the test set up
          */
         beforeEach(function(){
-            gui.app = gui.framework();
+            gui.app = gui.framework({
+                defaultFadeInTime:1,
+                defaultFadeOutTime:1,
+                defaultFadePauseTime:1
+            });
             gui.app.loadComponents();
 
             gui.app.addObserver(function (id){
