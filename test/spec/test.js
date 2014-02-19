@@ -4,6 +4,8 @@
     'use strict';
 
     describe('Routing', function(){
+    
+        this.timeout(15000);
 
         /**
          * Do the test set up
@@ -24,7 +26,7 @@
                 }
 
             });
-            this.timeout(50000);
+            
         });
 
         /**
@@ -34,12 +36,8 @@
          * @return Nothing
          */
         afterEach(function(done){
-            console.log('--------- reset location');
-            console.log(document.location.hash);
             if(document.location.hash === ''){
-                console.log('empty hash');
                 done();
-                console.log('test done 2');
                 return;
             }
             document.location.hash = '';
@@ -47,8 +45,6 @@
                 console.log('test done');
                 done();
             });
-
-           this.timeout(50000);
         });
 
         describe('On page load the hash value should be blank', function(){
@@ -68,7 +64,6 @@
             before(function(done){ 
                 document.location.hash = "/index/test";
                 gui.app.pageVisible(function(){
-                    console.log('here');
                     done();
                 });
             });
@@ -93,20 +88,19 @@
         describe('When I click go to test id=index_test should be active', function(){
 
            before(function(done){ 
-                console.log(document.location.hash);
+            
                 $('#index_button_link').trigger('click');
-                console.log(document.location.hash);
                 gui.app.pageVisible(function(){
-                    console.log('-- click done --');
                     done();
                 });
+
             });
 
             it('page with id=index_test should be active', function(){
                 assert($('#index_test').hasClass('comp-active'), 'index_test has comp-active class');
             });
 
-            it('page with id=index_test should hold three boobies', function(done){
+            it('page with id=index_test should hold three boobies', function(){
                 assert(
                     $('#index_test').html() === "( . Y . Y . )", 
                     'content of index_test is not as tripple boobies'
@@ -117,7 +111,7 @@
         describe('When I visit the index button page the whatami is bannana', function(){
 
            before(function(done){ 
-                document.location.hash = '/index/button'
+                document.location.hash = '/index/button';
                 gui.app.pageVisible(function(){
                     done();
                 });
