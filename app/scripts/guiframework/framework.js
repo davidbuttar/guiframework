@@ -14,7 +14,7 @@ var gui = gui || {};
         
         var defaultLoc = opts.defaultRoute || '/index/index/';
         var indexFile = opts.indexFile || ''; // root of app on server
-        var prettyUri = (typeof opts.prettyUrl !== 'undefined') ? opts.prettyUrl : true; // use pretty uris, if false using query strings
+        var prettyUrl = (typeof opts.prettyUrl !== 'undefined') ? opts.prettyUrl : true; // use pretty uris, if false using query strings
         
         var pages = {};
         var components = {};
@@ -111,7 +111,6 @@ var gui = gui || {};
                 $.ajax({
                     url : localAjax[0].getAttribute('data-loc')
                 }).done(function(data) {
-                    //$('#ajax-content').html();
                     $(localAjax[0]).after($(data).find('#main-inner').html()).remove();
                 });
             }
@@ -148,9 +147,9 @@ var gui = gui || {};
                 if (effects[suggestedEffect]) {
                     effects[suggestedEffect]($('#' + prevId), $('#' + curId), swapActive, pageVisible, pages[curId].onload);
                 } else if (prevId === curId) {// going to the page we are on requires no effects
+                    pageVisible();
                     pages[curId].onload();
                     fetching = false;
-                    pageVisible();
                 } else {
                     fadeBetween();
                 }
@@ -192,7 +191,7 @@ var gui = gui || {};
 
         // Lazy load a pages html if need be.
         function loadPage(uri) {
-            var ajaxFlag = prettyUri ? '?ajax=true' : '&ajax=true';
+            var ajaxFlag = prettyUrl ? '?ajax=true' : '&ajax=true';
             // Test if html is preloaded
             if($('#'+curId).length === 1){
                 htmlLoaded();
@@ -206,8 +205,8 @@ var gui = gui || {};
                     success : function(html) {
                         // Make sure were are loading a fragment
                         // and not a full page
-                        if (html.indexOf('DOCTYPE') !== -1) {
-                            console.error('Error loading incorrect page type');
+                        if (html.match(/doctype/i)) {
+                            gui.msg.error('Looks like a full page expected page fragment');
                             return;
                         } else if (html.indexOf('not_found') !== -1) {
                             curId = 'index_not_found';
@@ -262,7 +261,7 @@ var gui = gui || {};
         // Url to id
         function processUrl(uri) {
             var controller, action, uriBits;
-            if(prettyUri){
+            if(prettyUrl){
                 uri = uri.replace(/^\//,'').replace(/\/$/,'');
                 uriBits = uri.split('/');
                 controller = uriBits[0] || 'index';
@@ -365,9 +364,12 @@ var gui = gui || {};
 
 
         that.page = function(loc, callback) {
+            console.log(loc);
+            console.log(curLoc);
             that.pageVisible(callback);
-            if ('?' + loc !== curLoc) {
-                window.location.hash = '#?' + loc;
+            if (loc !== curLoc) {
+                console.log('changing hash');
+                window.location.hash = '#' + loc;
             } else {
                 pageVisible();
             }

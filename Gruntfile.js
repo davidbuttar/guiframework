@@ -167,7 +167,7 @@ module.exports = function (grunt) {
             all: {
                 options: {
                     run: true,
-                    reporter: 'Nyan',
+                    reporter: 'Spec',
                     urls: ['http://<%= connect.test.options.hostname %>:<%= connect.test.options.port %>/test/index.html']
                 }
             }

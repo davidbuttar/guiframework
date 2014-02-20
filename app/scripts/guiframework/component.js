@@ -28,10 +28,14 @@
         };
 
         // Call when navigating away, allows
-        // component to wrap up if need be.
+        // component to wrap up if need be
         that.unload = function() {
             
         };
+
+        // Called when we have a change to the parameters
+        // on the same page
+        that.changed = false;
 
         return that;
     };

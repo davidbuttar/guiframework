@@ -21,18 +21,24 @@
 <body>
     <div id="mocha"></div>
 
-    <div class='main-content'>
-        
-        <a href="#/index/index">(.)</a>
-        <a href="#/index/test">(.)</a>
-        <a href="#/index/button">(.)</a>
+    <!-- this is the initial html for the guiframework that should be reset on each test -->
+    <div id="main-content">
+        <a href="#/index/index">index</a>
+        <a href="#/index/test">test</a>
+        <a href="#/index/button">button</a>
         <div>I am now: <span id='whatami'>Something</span></div>
         
-        <div class='page' id='index_index'>( . Y . )</div>
-        <div class='page' id='index_test' data-handler='pageTest'>8========D</div>
+        <div class='page' id='index_index'>page index</div>
+        <div class='page' id='index_test' data-handler='pageTest'>page test</div>
         <div class='page' id='index_button'>
+            page button
             <button id='index_button_link'>Go to Test</button>
         </div>
+    </div>
+
+    <div class='main-content'>
+        
+
 
     </div>
 
@@ -43,14 +49,16 @@
     <script>mocha.setup('bdd')</script>
     <script src="bower_components/chai/chai.js"></script>
     <script>
+
         var assert = chai.assert;
         var expect = chai.expect;
         var should = chai.should();
 
-        $('#index_button_link').click(function(){
+        var mainContent = $('#main-content').remove().html();
+
+        $('body').on('click', '#index_button_link', function(){
             document.location.hash = "/index/test";
         });
-
 
     </script>
 
@@ -66,10 +74,12 @@
     <script src="spec/test.js"></script>
 
     <script>
+    
         // Only tests run in real browser, injected script run if options.run == true
-        //if (navigator.userAgent.indexOf('PhantomJS') < 0) {
+        if (navigator.userAgent.indexOf('PhantomJS') < 0) {
             mocha.run();
-        //}
+        }
+
     </script>
 </body>
 </html>
