@@ -18,16 +18,6 @@
                 defaultFadePauseTime:1
             });
             gui.app.loadComponents();
-
-            gui.app.addObserver(function (id){
-                if (id === 'index_button'){
-                    $('#whatami').html('bannana');
-                }
-                else{
-                    $('#whatami').html('apple');
-                }
-            });
-            
         });
 
         /**
@@ -43,7 +33,6 @@
             }
             document.location.hash = '';
             gui.app.pageVisible(function(){
-                console.log('test done');
                 done();
             });
         });
@@ -107,22 +96,66 @@
             });
         });
 
-        describe('When I visit the index button page the whatami is bannana', function(){
+    });
 
-            before(function(done){
-                document.location.hash = '/index/button';
-                gui.app.pageVisible(function(){
-                    done();
-                });
+
+    describe('Route Observer', function(){
+        // Make sure we have enough time.
+        this.timeout(15000);
+
+        /**
+         * Do the test set up
+         */
+        beforeEach(function(){
+            gui.app = gui.framework({
+                defaultFadeInTime:1,
+                defaultFadeOutTime:1,
+                defaultFadePauseTime:1
             });
+            gui.app.loadComponents();
 
-            it('When on id=index_button the contentn of whatami is bannana', function(){
-                assert(
-                    $('#whatami').html() === 'bannana',
-                    'content of whatami is bannana'
-                );
+            gui.app.addObserver(function (id){
+                if (id === 'index_button'){
+                    $('#whatami').html('bannana');
+                }
+                else{
+                    $('#whatami').html('apple');
+                }
+            });
+            
+        });
+
+        /**
+         * Clean up the test.
+         * 
+         * @param  {Function} done The done callback
+         * @return Nothing
+         */
+        afterEach(function(done){
+            if(document.location.hash === ''){
+                done();
+                return;
+            }
+            document.location.hash = '';
+            gui.app.pageVisible(function(){
+                done();
             });
         });
+
+        describe('Add callback to observe route changes, with an update that includes the active id', function(){
+            it('It should set #whatami to bannana when id changes to index_button', function(done){
+                document.location.hash = '/index/button';
+                gui.app.pageVisible(function(){
+                    assert(
+                        $('#whatami').html() === 'bannana',
+                        'content of whatami is bannana'
+                    );
+                    done();
+                });
+                
+            });
+        });
+
 
     });
 
