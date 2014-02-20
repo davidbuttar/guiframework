@@ -105,7 +105,7 @@ var gui = gui || {};
                 }
             }
 
-            //Check for an ajax filler to deal with legacy pages in mygrapeshot
+            //Check for an ajax filler to deal with legacy pages.
             var localAjax = $(el).find('.ajax');
             if (localAjax[0]) {
                 $.ajax({
