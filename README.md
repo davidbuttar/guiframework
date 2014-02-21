@@ -80,6 +80,14 @@ Components are the javascript handlers which we can attach to both pages (as see
 - loadData: Called before a page due to be visited is visible, so that any ajax data can be fetched and inserted in to the dom before the user sees the page.
 - changed: Pages can optionally implement the changed function which will trigger when the same page is selected but the parametes have changed, e.g. /index/posts/1 changes to /index/posts/2.
 
+As well as pages you can add standalone components which are independent of routes, these need a 'component' class in order to be picked up e.g.
+
+    <div class='component' id='twitter-feed' data-handler="fetchTwitterFeed">
+        <!-- place twitter content via ajax -->
+    </div>
+
+You would then just add javascript component class called 'gui.fetchTwitterFeed' just like the page class above.
+
 
 Effects
 =============
@@ -116,3 +124,27 @@ The app will then call fadeToSlideup when going from a default page which using 
 
 Note: you will have to have appropriate css rules set so that slideup page is positioned correctly.
 
+Options
+=============
+
+The guiframework supports a number of configuration options,
+
+- defaultRoute: app route to be loaded on visit to site root, in other words the home page.
+- prettyUrl: when set to false querystrings will be used in the form of '?c=page&a=one' c and a must be used.
+- observers: add an array of callback to be updated when the route changes.
+- onFirstLoad: add a callback to be called before any other app activity.
+- htmlEnhancement: add any plugins that attach events or enhancments to html e.g. tool tips.
+
+
+Sample app config
+
+    gui.app = gui.framework({
+		observers : [mm.change],
+        prettyUrl : false,
+        defaultRoute : '?c=segment&a=index',
+        htmlEnhancement : function(){
+            $(".ttip").tipTip({
+                maxWidth : "auto"
+            });
+        }
+	});
