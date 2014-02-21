@@ -50,28 +50,32 @@ Attach the data-handler attribute to the page element,
 
     <div class='page' id='page_one' data-handler="pageOne">page one</div>
     
-Define a new javasript component for this page,
+Define a new javascript component for this page,
 
     // Handle javascript enhancments for pageOne
     (function() {
         var pageOne = function(opts) {
-      
             var that = gui.component();
-
             that.onload = function() {
                 $('#page_one').html("test onload");
             };
-
             that.unload = function() {
                 $('#page_one').html("test unload");
             };
-
             return that;
-      
         };
-
         gui.pageOne = pageOne;
-
     })();
 
 By attaching the data-handler object an instance of the above object will be automatically run and in addition it should extend the gui.component class which will mean it will have access to a number of callbacks depending on the app state, e.g. the 'onload' call back will be called each time the page is visited.
+
+
+Components
+=============
+
+Components are the javascript handlers which we can attach to both pages (as seen in the handlers sectiona above) and stand alone components, a component has a number of useful callbacks.
+
+- onload: Called on page load on components and called on each fresh visit on pages.
+- unload: Called when leaving a current page.
+- loadData: Called before a page due to be visited is visible, so that any ajax data can be fetched and inserted in to the dom before the user sees the page.
+- changed: Pages can optionally implement the changed function which will trigger when the same page is selected but the parametes have changed, e.g. /index/posts/1 changes to /index/posts/2.
