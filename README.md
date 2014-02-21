@@ -1,40 +1,47 @@
 guiframework
 =============
 
-Javascript presentation and routing framework
+Javascript presentation and routing framework using jquery.
 
 - automatically map view ids to routes and declare a javascript handler object.
-- add bespoke animations for transitions between page views.
 - create standalone view components and declaratively specify javascript handler.
-
+- add bespoke animations for transitions between page views.
 
 Routing
 =============
 
-The framework uses hash routes such as '#/page/one' to select sections of the dom marked by the css class 'page' to display. The current route should have a page with a matching id in the form of page_one, see example below. 
-
-A simple use case for the framework is to allow mapping of url hash routes to fragments of html ('pages') in order to provide single page apps with normal page navigation with deep linking and browser history functionality.
-
-Simple one page app
-------------
-
-In the body of the html.
+When your application starts, the framework is responsible for displaying page templates. It does so by matching the current URL to the page ids that you've defined, in the body of the html.
     
-    <div class='main-content'>
-        <div class='page' id='page_one'>page one</div>
-        <div class='page' id='page_two'>page two</div>
+    <div class='gui-main-content'>
+        <div class='gui-page' id='page_one'>page one</div>
+        <div class='gui-page' id='page_two'>page two</div>
     </div>
+
+The page with id='page_one' will be displayed when the url is /page/one and like wise it's /page/two for the other page. Pages should be defined with the special 'gui-page' css class so that guiframework knows there are the page templates for the app.
+
+
+You can lauch guiframework as follows, giving it the default route to match your home page.
+
+    $(function () {
+        gui.framework({
+            defaultRoute: '/page/one'
+        });
+    });
     
-Launch framework on page load.
-    
-    // Launch framework.
-    gui.app = gui.framework({ defaultRoute:'/page/one' });
-    
+You must also provide css rules for .gui-page and .gui-page-active. It will have the gui-page-active class when it is the active page.
+
+    .gui-page {
+        display: none;
+    }
+
+    .gui-page-active {
+        display: block;
+    }
     
 Handlers
 =============
 
-In addition to routing to a particular page section you can associate a javascript object which will handle any page javascript based enhancements, such as fetching data over ajax or starting an animation.
+In addition you can associate a javascript object with a page which will handle any page javascript based enhancements, such as fetching data over ajax or starting an animation.
 
 Example
 ------------
