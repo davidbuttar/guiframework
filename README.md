@@ -90,7 +90,7 @@ By default when you move from one page to another the outgoing page will fade ou
     
 And then add the follow to your app instance,
 
-    gui.app.addEffect('fadeToSlideup', function(outgoingElm, incomingElm, swappedCallback, onvisibleCallback,                                                           onloadCallback){
+    gui.app.addEffect('fadeToSlideup', function(outgoingElm, incomingElm, swappedCallback, onvisibleCallback,  onloadCallback){
         outgoingElm.animate({
                 'opacity' : 0
             }, 600, function() {
