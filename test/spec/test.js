@@ -34,7 +34,7 @@
             it('index_index should be selected', function(){
                 
                 document.location.hash.should.equal('');
-                $('#index_index').hasClass('gui-page-active').should.equal(true);
+                $('#index_index').hasClass('comp-active').should.equal(true);
             
             });
         });
@@ -46,12 +46,12 @@
                 document.location.hash = '/index/test';
                 gui.app.pageVisible(function(){
                     assert(
-                        $('#index_test').hasClass('gui-page-active'),
-                        'index_test has gui-page-active class'
+                        $('#index_test').hasClass('comp-active'),
+                        'index_test has comp-active class'
                     );
                     assert(
-                        !$('#index_index').hasClass('gui-page-active'),
-                        'index_index does not have gui-page-active class'
+                        !$('#index_index').hasClass('comp-active'),
+                        'index_index does not have comp-active class'
                     );
                     done();
                 });
@@ -66,8 +66,8 @@
                 $('#index_button_link').trigger('click');
                 gui.app.pageVisible(function(){
                     assert(
-                        $('#index_test').hasClass('gui-page-active'),
-                        'index_test has gui-page-active class'
+                        $('#index_test').hasClass('comp-active'),
+                        'index_test has comp-active class'
                     );
                     done();
                 });
@@ -131,7 +131,7 @@
 
                                     gui.app.pageVisible(function(){
 
-                                        $('.gui-page-active').attr('id').should.equal('index_test');
+                                        $('.comp-active').attr('id').should.equal('index_test');
                                         done();
 
                                     });

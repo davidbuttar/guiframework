@@ -12,9 +12,9 @@ Routing
 
 When your application starts, the framework is responsible for displaying page templates. It does so by matching the current URL to the page ids that you've defined, in the body of the html.
     
-    <div class='gui-main-content'>
-        <div class='gui-page' id='page_one'>page one</div>
-        <div class='gui-page' id='page_two'>page two</div>
+    <div class='main-content'>
+        <div class='page' id='page_one'>page one</div>
+        <div class='page' id='page_two'>page two</div>
     </div>
 
 The page with id='page_one' will be displayed when the url is /page/one and like wise it's /page/two for the other page. Pages should be defined with the special 'gui-page' css class so that guiframework knows there are the page templates for the app.
@@ -28,13 +28,13 @@ You can lauch guiframework as follows, giving it the default route to match your
         });
     });
     
-You must also provide css rules for .gui-page and .gui-page-active. It will have the gui-page-active class when it is the active page.
+You must also provide css rules for .page and .comp-active. It will have the comp-active class when it is the active page.
 
-    .gui-page {
+    .page {
         display: none;
     }
 
-    .gui-page-active {
+    .comp-active {
         display: block;
     }
     

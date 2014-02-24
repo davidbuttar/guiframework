@@ -71,7 +71,7 @@ var gui = gui || {};
         // Loop round DOM fragments and find js that needs
         // initializing
         function loadHandlers(el, id) {
-            var componentClass = 'gui-page';
+            var componentClass = 'page';
 
             // No element found, so attach default component
             if (!el){
@@ -92,7 +92,7 @@ var gui = gui || {};
             }
             // Search for sub components or included pages
             componentClass = 'component';
-            var localComponents = $(el).find('.' + componentClass + ' , .gui-page');
+            var localComponents = $(el).find('.' + componentClass + ' , .page');
             for (var i = 0, l = localComponents.length; i < l; i++) {
                 if ($(localComponents[i]).hasClass('page')){
                     $(localComponents[i]).removeClass('page').addClass('component');
@@ -118,8 +118,8 @@ var gui = gui || {};
 
         // Make new component active
         function swapActive() {
-            $('#' + prevId).removeClass('gui-page-active');
-            $('#' + curId).addClass('gui-page-active');
+            $('#' + prevId).removeClass('comp-active');
+            $('#' + curId).addClass('comp-active');
         }
 
         // We may have fail to load a page
@@ -127,7 +127,7 @@ var gui = gui || {};
         // need to figure out what is really currently displayed
         // and where we are going to
         function updatePrev() {
-            prevId = $('.gui-page-active').attr('id');
+            prevId = $('.comp-active').attr('id');
         }
 
         // Based on data-effect values calculate
@@ -154,7 +154,7 @@ var gui = gui || {};
                     fadeBetween();
                 }
             } else {
-                $('#' + curId).addClass('gui-page-active');
+                $('#' + curId).addClass('comp-active');
                 pageVisible();
                 $('#' + curId).animate({
                     'opacity' : 1
@@ -213,7 +213,7 @@ var gui = gui || {};
                         }
                         var el = $('#' + curId);
                         if (el.length === 0) {
-                            el = $(html).prependTo('.gui-main-content');
+                            el = $(html).prependTo('.main-content');
                         }
                         htmlLoaded();
                     }
