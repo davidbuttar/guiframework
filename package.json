@@ -1,7 +1,7 @@
 {
   "name": "guiframework",
   "version": "1.3.2",
-  "developedBy":"David Buttar",
+  "developedBy": "David Buttar",
   "dependencies": {},
   "devDependencies": {
     "grunt": "~0.4.1",
@@ -27,7 +27,8 @@
     "grunt-concurrent": "~0.4.0",
     "load-grunt-tasks": "~0.2.0",
     "time-grunt": "~0.2.0",
-    "jshint-stylish": "~0.1.3"
+    "jshint-stylish": "~0.1.3",
+    "mocha": "~1.17.1"
   },
   "engines": {
     "node": ">=0.8.0"

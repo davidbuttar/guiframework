@@ -71,7 +71,7 @@ var gui = gui || {};
         // Loop round DOM fragments and find js that needs
         // initializing
         function loadHandlers(el, id) {
-            var componentClass = 'page';
+            var componentClass = 'gui-page';
 
             // No element found, so attach default component
             if (!el){
@@ -92,7 +92,7 @@ var gui = gui || {};
             }
             // Search for sub components or included pages
             componentClass = 'component';
-            var localComponents = $(el).find('.' + componentClass + ' , .page');
+            var localComponents = $(el).find('.' + componentClass + ' , .gui-page');
             for (var i = 0, l = localComponents.length; i < l; i++) {
                 if ($(localComponents[i]).hasClass('page')){
                     $(localComponents[i]).removeClass('page').addClass('component');
@@ -118,8 +118,8 @@ var gui = gui || {};
 
         // Make new component active
         function swapActive() {
-            $('#' + prevId).removeClass('comp-active');
-            $('#' + curId).addClass('comp-active');
+            $('#' + prevId).removeClass('gui-page-active');
+            $('#' + curId).addClass('gui-page-active');
         }
 
         // We may have fail to load a page
@@ -127,7 +127,7 @@ var gui = gui || {};
         // need to figure out what is really currently displayed
         // and where we are going to
         function updatePrev() {
-            prevId = $('.comp-active').attr('id');
+            prevId = $('.gui-page-active').attr('id');
         }
 
         // Based on data-effect values calculate
@@ -154,7 +154,7 @@ var gui = gui || {};
                     fadeBetween();
                 }
             } else {
-                $('#' + curId).addClass('comp-active');
+                $('#' + curId).addClass('gui-page-active');
                 pageVisible();
                 $('#' + curId).animate({
                     'opacity' : 1
@@ -213,7 +213,7 @@ var gui = gui || {};
                         }
                         var el = $('#' + curId);
                         if (el.length === 0) {
-                            el = $(html).prependTo('.main-content');
+                            el = $(html).prependTo('.gui-main-content');
                         }
                         htmlLoaded();
                     }
@@ -364,11 +364,8 @@ var gui = gui || {};
 
 
         that.page = function(loc, callback) {
-            console.log(loc);
-            console.log(curLoc);
             that.pageVisible(callback);
             if (loc !== curLoc) {
-                console.log('changing hash');
                 window.location.hash = '#' + loc;
             } else {
                 pageVisible();

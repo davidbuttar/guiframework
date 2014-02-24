@@ -8,16 +8,16 @@
             console.log('run onload');
             $('#index_test').html("test onload");
 
-        }
+        };
 
         that.unload = function() {
             console.log('run unload');
             $('#index_test').html("test unload");
-        }
+        };
 
         that.changed = function() {
             console.log('changed');
-        }
+        };
 
         return that;
       
