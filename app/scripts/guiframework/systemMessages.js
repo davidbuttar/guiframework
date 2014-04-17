@@ -12,7 +12,7 @@
         var attachedDialogCancel = false;
         var autoHideTime = 3200;
         var hideGeneralTimeout; // General messages auto hide
-        
+
         // Center a message both vertically and horizontally.
         function centerMessage($this) {
             $this.css('top', (($(window).height() - $this.outerHeight()) / 2) + $(window).scrollTop() + 'px');
@@ -36,7 +36,7 @@
                 }
             });
         }
-        
+
         // Attach events appropraitly for input dialog boxes
         function attachInputDialogEvents(callback, keepOverlay, isValid) {
             $('#input-dialog-cancel').unbind();
@@ -44,7 +44,7 @@
                 e.preventDefault();
                 that.hideInputDialog(keepOverlay);
             });
-            
+
             function processInputValue(keepOverlay){
                 var inputVal = $('#input-dialog-input').val();
                 var isValidResult = isValid ? isValid(inputVal) : true;
@@ -91,7 +91,7 @@
             clearTimeout(loadingTimer);
             $('#gui-loading').hide();
         };
-        
+
         // Uses popup overlay if required
         that.showOverlay = function() {
             $('#gui-overlay').stop();
@@ -111,7 +111,7 @@
                 });
             });
         };
-        
+
         // Generic dialog function pass the text and a callback to take
         // Place on confirmation
         that.dialog = function(text, callback, keepOverlay, noCancel, asHTML) {
@@ -144,7 +144,7 @@
             }
             $('#gui-input-dialog').hide();
         };
-        
+
         // Display Saving Message
         that.general = function(str, timeout) {
             var curTimeout = timeout || autoHideTime;
@@ -157,7 +157,7 @@
                 $('#gui-general').hide();
             }, curTimeout);
         };
-        
+
         // Display Saving Message
         that.error = function(str) {
             str = str || 'Unknown failure';
@@ -171,9 +171,9 @@
         // Styled version of JavaScript prompt.
         // heading : Optional: Places heading message.
         // label : The label for the text input.
-        // success : Callback called when a valid value is provided, 
+        // success : Callback called when a valid value is provided,
         //           passes the value as a parameter.
-        // valid : Optional: passsed current text value should return true if OK 
+        // valid : Optional: passsed current text value should return true if OK
         //         and false or a string message if not valid
         that.prompt = function(opts) {
             var opt = opts || {};
@@ -182,13 +182,13 @@
             var callback = opt.success || false;
             var valid = opt.valid || false;
             var keepOverlay = opt.keepOverlay || false;
-            
+
             attachInputDialogEvents(callback, keepOverlay, valid);
             that.showOverlay();
-            
+
             $('#input-dialog-input').removeClass('gui-form-error').val('');
             $('#input-dialog-invalid').hide();
-            
+
             if(heading){
                 $('#gui-input-dialog').find('.message-type').show();
                 $('#gui-input-dialog').find('.message-dialog').text(heading);
@@ -198,7 +198,7 @@
 
             // Paste in label name
             $('#gui-input-dialog').find('.gui-label').text(label);
-            
+
             $('#gui-input-dialog').show();
             centerMessage($('#gui-input-dialog'));
             $('#input-dialog-input').focus();
